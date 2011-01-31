@@ -17,6 +17,13 @@ module Gitolite
       @config = Config.new(File.join(path, conf))
     end
 
+    def add_public_key(key_data, user, location = '')
+      new_key = SSHKey.create(SSHKey.file_name(user,location), key_data)
+      owner = new_key.owner
+      @ssh_keys[owner] ||= []
+      @ssh_keys[owner] << new_key
+    end
+
     #Writes all aspects out to the file system
     #will also stage all changes
     def save
