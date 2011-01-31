@@ -42,6 +42,11 @@ module Gitolite
     def to_s
       [@type, @blob, @email].join(' ')
     end
+
+    def self.file_name(user, location = '')
+      location = "@#{location}" unless location.empty?
+      String.new("#{user}#{location}.pub")
+    end
   end
 end
 

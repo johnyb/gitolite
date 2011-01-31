@@ -143,4 +143,18 @@ describe Gitolite::SSHKey do
       File.unlink(file_name)
     end
   end
+
+  describe '#file_name' do
+    it 'should support simple file names' do
+      SSHKey.file_name('jdoe').should eq('jdoe.pub')
+    end
+
+    it 'should support e-mail adresses as username' do
+      SSHKey.file_name('jdoe@example.com').should eq('jdoe@example.com.pub')
+    end
+
+    it 'should handle locations' do
+      SSHKey.file_name('jdoe@example.com', 'machine1').should eq('jdoe@example.com@machine1.pub')
+    end
+  end
 end
