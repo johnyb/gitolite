@@ -11,6 +11,16 @@ module Gitolite
   class SSHKey
     attr_accessor :owner, :location, :type, :blob, :email
 
+    #create a new public key file with some data
+    def self.create(file_name, key_data)
+      raise "#{file_name} already exists!" if File.exists?(file_name)
+
+      File.open(file_name,"w+") do |file|
+        file << key_data
+      end
+      self.new(file_name)
+    end
+
     def initialize(key)
 
       raise "#{key} does not exist!" unless File.exists?(key)
